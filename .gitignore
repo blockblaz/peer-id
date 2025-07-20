@@ -1,0 +1,6 @@
+### Zig template
+.zig-cache/
+zig-out/
+
+generate.o
+generate
