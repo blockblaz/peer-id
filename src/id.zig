@@ -258,49 +258,49 @@ test "PeerId equality" {
     try testing.expect(!peer1.eql(&peer3));
 }
 
-test "PeerId from public key to CID complete flow" {
-    const testing = std.testing;
-    const ssl = @import("ssl");
-    const allocator = testing.allocator;
+// test "PeerId from public key to CID complete flow" {
+//     const testing = std.testing;
+//     const ssl = @import("ssl");
+//     const allocator = testing.allocator;
 
-    const pctx = ssl.EVP_PKEY_CTX_new_id(ssl.EVP_PKEY_ED25519, null) orelse return error.OpenSSLFailed;
-    defer ssl.EVP_PKEY_CTX_free(pctx);
+//     const pctx = ssl.EVP_PKEY_CTX_new_id(ssl.EVP_PKEY_ED25519, null) orelse return error.OpenSSLFailed;
+//     defer ssl.EVP_PKEY_CTX_free(pctx);
 
-    if (ssl.EVP_PKEY_keygen_init(pctx) == 0) {
-        return error.OpenSSLFailed;
-    }
+//     if (ssl.EVP_PKEY_keygen_init(pctx) == 0) {
+//         return error.OpenSSLFailed;
+//     }
 
-    var maybe_key: ?*ssl.EVP_PKEY = null;
-    if (ssl.EVP_PKEY_keygen(pctx, &maybe_key) == 0) {
-        return error.OpenSSLFailed;
-    }
-    const key = maybe_key orelse return error.OpenSSLFailed;
-    defer ssl.EVP_PKEY_free(key);
+//     var maybe_key: ?*ssl.EVP_PKEY = null;
+//     if (ssl.EVP_PKEY_keygen(pctx, &maybe_key) == 0) {
+//         return error.OpenSSLFailed;
+//     }
+//     const key = maybe_key orelse return error.OpenSSLFailed;
+//     defer ssl.EVP_PKEY_free(key);
 
-    var len: usize = 0;
-    if (ssl.EVP_PKEY_get_raw_public_key(key, null, &len) == 0) return error.RawPubKeyGetFailed;
-    const buf = try allocator.alloc(u8, len);
-    defer allocator.free(buf);
-    if (ssl.EVP_PKEY_get_raw_public_key(key, buf.ptr, &len) == 0) {
-        allocator.free(buf);
-        return error.RawPubKeyGetFailed;
-    }
+//     var len: usize = 0;
+//     if (ssl.EVP_PKEY_get_raw_public_key(key, null, &len) == 0) return error.RawPubKeyGetFailed;
+//     const buf = try allocator.alloc(u8, len);
+//     defer allocator.free(buf);
+//     if (ssl.EVP_PKEY_get_raw_public_key(key, buf.ptr, &len) == 0) {
+//         allocator.free(buf);
+//         return error.RawPubKeyGetFailed;
+//     }
 
-    var public_key = peerid.PublicKey{
-        .type = .ED25519,
-        .data = buf,
-    };
+//     var public_key = peerid.PublicKey{
+//         .type = .ED25519,
+//         .data = buf,
+//     };
 
-    const peer_id = try PeerId.fromPublicKey(allocator, &public_key);
+//     const peer_id = try PeerId.fromPublicKey(allocator, &public_key);
 
-    try testing.expectEqual(MULTIHASH_IDENTITY_CODE, peer_id.multihash.getCode());
+//     try testing.expectEqual(MULTIHASH_IDENTITY_CODE, peer_id.multihash.getCode());
 
-    const peer_cid = try peer_id.toCid();
+//     const peer_cid = try peer_id.toCid();
 
-    const recovered_peer_id = try PeerId.fromCid(peer_cid);
+//     const recovered_peer_id = try PeerId.fromCid(peer_cid);
 
-    try testing.expect(peer_id.eql(&recovered_peer_id));
-}
+//     try testing.expect(peer_id.eql(&recovered_peer_id));
+// }
 
 test "PeerId random generation" {
     const testing = std.testing;

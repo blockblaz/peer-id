@@ -12,12 +12,6 @@ pub fn build(b: *std.Build) void {
     });
     const zmultiformats_module = zmultiformats_dep.module("multiformats-zig");
 
-    const ssl_dep = b.dependency("boringssl", .{
-        .target = target,
-        .optimize = optimize,
-    });
-    const ssl_module = ssl_dep.module("ssl");
-
     const gremlin_dep = b.dependency("gremlin", .{
         .target = target,
         .optimize = optimize,
@@ -56,7 +50,6 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib_unit_tests.root_module.addImport("ssl", ssl_module);
 
     lib_unit_tests.step.dependOn(&protobuf.step);
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
