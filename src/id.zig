@@ -1,5 +1,4 @@
 const std = @import("std");
-const peerid = @import("root.zig");
 const Allocator = std.mem.Allocator;
 const multiformats = @import("multiformats");
 const multihash = multiformats.multihash;
@@ -8,6 +7,7 @@ const Multicodec = multiformats.multicodec.Multicodec;
 const multibase = multiformats.multibase;
 const cid = multiformats.cid;
 const CID = cid.CID;
+const keys = @import("keys.proto.zig");
 
 /// Maximum length for inline keys that use identity multihash
 const MAX_INLINE_KEY_LENGTH: usize = 42;
@@ -46,7 +46,7 @@ pub const PeerId = struct {
     /// Creates a PeerId from a public key
     /// For keys <= 42 bytes, uses identity multihash
     /// For larger keys, uses SHA2-256 hash
-    pub fn fromPublicKey(allocator: Allocator, public_key: *peerid.PublicKey) !Self {
+    pub fn fromPublicKey(allocator: Allocator, public_key: *keys.PublicKey) !Self {
         const protobuf_public_key = try public_key.encode(allocator);
         defer allocator.free(protobuf_public_key);
         if (protobuf_public_key.len <= MAX_INLINE_KEY_LENGTH) {

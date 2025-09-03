@@ -24,7 +24,7 @@
     // original project's identity. Thus it is recommended to leave the comment
     // on the following line intact, so that it shows up in code reviews that
     // modify the field.
-    .fingerprint = 0x20d91db46025508e, // Changing this has security and trust implications.
+    .fingerprint = 0x20d91db40f8d0922,
 
     // Tracks the earliest Zig version that the package considers to be a
     // supported use case.
@@ -37,8 +37,8 @@
     // internet connectivity.
     .dependencies = .{
         .zmultiformats = .{
-            .url = "git+https://github.com/zen-eth/multiformats-zig#03f5c4b4594b4c03b93c40ae806463bcd2a71dac",
-            .hash = "zmultiformats-0.1.0-6A8pca4MBQAOeUuxppEgwy_j0U_FVNK6h7swLzzDrCZ0",
+            .url = "git+https://github.com/zen-eth/multiformats-zig#92c90226ee8b14052718df724a1bc753996a6e07",
+            .hash = "zmultiformats-0.1.0-U2uyh94UBQCwBOXy5xZ9SZQJkQXZSiYCudWPWxNqjuE0",
         },
         .gremlin = .{
             .url = "git+https://github.com/octopus-foundation/gremlin.zig#fccfe2659f24497199d86404e0ef7dbc79e033d2",
