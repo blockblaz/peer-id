@@ -23,9 +23,7 @@ pub const PublicKey = struct {
 
     pub fn calcProtobufSize(self: *const PublicKey) usize {
         var res: usize = 0;
-        if (@intFromEnum(self.type) != 0) {
-            res += gremlin.sizes.sizeWireNumber(PublicKeyWire.TYPE_WIRE) + gremlin.sizes.sizeI32(@intFromEnum(self.type));
-        }
+        res += gremlin.sizes.sizeWireNumber(PublicKeyWire.TYPE_WIRE) + gremlin.sizes.sizeI32(@intFromEnum(self.type));
         if (self.data) |v| {
             if (v.len > 0) {
                 res += gremlin.sizes.sizeWireNumber(PublicKeyWire.DATA_WIRE) + gremlin.sizes.sizeUsize(v.len) + v.len;
@@ -46,9 +44,7 @@ pub const PublicKey = struct {
     }
 
     pub fn encodeTo(self: *const PublicKey, target: *gremlin.Writer) void {
-        if (@intFromEnum(self.type) != 0) {
-            target.appendInt32(PublicKeyWire.TYPE_WIRE, @intFromEnum(self.type));
-        }
+        target.appendInt32(PublicKeyWire.TYPE_WIRE, @intFromEnum(self.type));
         if (self.data) |v| {
             if (v.len > 0) {
                 target.appendBytes(PublicKeyWire.DATA_WIRE, v);
@@ -111,9 +107,7 @@ pub const PrivateKey = struct {
 
     pub fn calcProtobufSize(self: *const PrivateKey) usize {
         var res: usize = 0;
-        if (@intFromEnum(self.type) != 0) {
-            res += gremlin.sizes.sizeWireNumber(PrivateKeyWire.TYPE_WIRE) + gremlin.sizes.sizeI32(@intFromEnum(self.type));
-        }
+        res += gremlin.sizes.sizeWireNumber(PrivateKeyWire.TYPE_WIRE) + gremlin.sizes.sizeI32(@intFromEnum(self.type));
         if (self.data) |v| {
             if (v.len > 0) {
                 res += gremlin.sizes.sizeWireNumber(PrivateKeyWire.DATA_WIRE) + gremlin.sizes.sizeUsize(v.len) + v.len;
@@ -134,9 +128,7 @@ pub const PrivateKey = struct {
     }
 
     pub fn encodeTo(self: *const PrivateKey, target: *gremlin.Writer) void {
-        if (@intFromEnum(self.type) != 0) {
-            target.appendInt32(PrivateKeyWire.TYPE_WIRE, @intFromEnum(self.type));
-        }
+        target.appendInt32(PrivateKeyWire.TYPE_WIRE, @intFromEnum(self.type));
         if (self.data) |v| {
             if (v.len > 0) {
                 target.appendBytes(PrivateKeyWire.DATA_WIRE, v);

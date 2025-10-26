@@ -1,5 +1,4 @@
 const std = @import("std");
-const ProtoGenStep = @import("gremlin").ProtoGenStep;
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -18,14 +17,6 @@ pub fn build(b: *std.Build) void {
     });
     const gremlin_module = gremlin_dep.module("gremlin");
 
-    const protobuf = ProtoGenStep.create(
-        b,
-        .{
-            .proto_sources = b.path("src"),
-            .target = b.path("src"),
-        },
-    );
-
     const peer_id_module = b.addModule("peer-id", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
@@ -41,7 +32,6 @@ pub fn build(b: *std.Build) void {
         .root_module = peer_id_module,
         .linkage = .static,
     });
-    lib.step.dependOn(&protobuf.step);
 
     b.installArtifact(lib);
 
@@ -50,8 +40,6 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
-    lib_unit_tests.step.dependOn(&protobuf.step);
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
 
     const test_step = b.step("test", "Run unit tests");
