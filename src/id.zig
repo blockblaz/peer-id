@@ -53,9 +53,12 @@ pub const PeerId = struct {
         if (public_key.type == .RSA) {
             // RSA is the default key type (0) so the encoder omits it. Append the tag/value to
             // match other implementations when hashing protobuf-encoded keys.
-            const type_field = [_]u8{ 0x08, 0x00 };
-            const augmented = try std.mem.concat(allocator, u8, &.{ &type_field, protobuf_public_key });
-            allocator.free(protobuf_public_key);
+            const augmented = blk: {
+                const type_field = [_]u8{ 0x08, 0x00 };
+                const original = protobuf_public_key;
+                defer allocator.free(original);
+                break :blk try std.mem.concat(allocator, u8, &.{ &type_field, original });
+            };
             protobuf_public_key = augmented;
         }
 
