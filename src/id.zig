@@ -47,8 +47,21 @@ pub const PeerId = struct {
     /// For keys <= 42 bytes, uses identity multihash
     /// For larger keys, uses SHA2-256 hash
     pub fn fromPublicKey(allocator: Allocator, public_key: *keys.PublicKey) !Self {
-        const protobuf_public_key = try public_key.encode(allocator);
+        var protobuf_public_key = try public_key.encode(allocator);
         defer allocator.free(protobuf_public_key);
+
+        if (public_key.type == .RSA) {
+            // RSA is the default key type (0) so the encoder omits it. Append the tag/value to
+            // match other implementations when hashing protobuf-encoded keys.
+            const augmented = blk: {
+                const type_field = [_]u8{ 0x08, 0x00 };
+                const original = protobuf_public_key;
+                defer allocator.free(original);
+                break :blk try std.mem.concat(allocator, u8, &.{ &type_field, original });
+            };
+            protobuf_public_key = augmented;
+        }
+
         if (protobuf_public_key.len <= MAX_INLINE_KEY_LENGTH) {
             // Use identity multihash for small keys
             const mh = try Multihash(64).wrap(MULTIHASH_IDENTITY_CODE, protobuf_public_key);
