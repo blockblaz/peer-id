@@ -6,12 +6,6 @@ pub fn build(b: *std.Build) void {
 
     const optimize = b.standardOptimizeOption(.{});
 
-    const zmultiformats_dep = b.dependency("zmultiformats", .{
-        .target = target,
-        .optimize = optimize,
-    });
-    const zmultiformats_module = zmultiformats_dep.module("multiformats-zig");
-
     const gremlin_dep = b.dependency("gremlin", .{
         .target = target,
         .optimize = optimize,
@@ -32,9 +26,14 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    peer_id_module.addImport("multiformats", zmultiformats_module);
-
     peer_id_module.addImport("gremlin", gremlin_module);
+
+    const multiformats_dep = b.dependency("zmultiformats", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    const multiformats_module = multiformats_dep.module("multiformats-zig");
+    peer_id_module.addImport("multiformats", multiformats_module);
 
     const lib = b.addLibrary(.{
         .name = "peer-id",
@@ -47,8 +46,6 @@ pub fn build(b: *std.Build) void {
 
     const lib_unit_tests = b.addTest(.{
         .root_module = peer_id_module,
-        .target = target,
-        .optimize = optimize,
     });
 
     lib_unit_tests.step.dependOn(&protobuf.step);
