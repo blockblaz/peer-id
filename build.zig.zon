@@ -28,7 +28,7 @@
 
     // Tracks the earliest Zig version that the package considers to be a
     // supported use case.
-    .minimum_zig_version = "0.14.1",
+    .minimum_zig_version = "0.15.2",
 
     // This field is optional.
     // Each dependency must either provide a `url` and `hash`, or a `path`.
@@ -37,12 +37,12 @@
     // internet connectivity.
     .dependencies = .{
         .zmultiformats = .{
-            .url = "git+https://github.com/zen-eth/multiformats-zig#1359ac3ab12a6af173c2b7f13ae9c4f5ff34e11e",
-            .hash = "zmultiformats-0.1.0-yjvchlEaBQCuIiXU5ScwglKjcfv9KxWERFPuriP7ReZs",
+            .url = "git+https://github.com/zen-eth/multiformats-zig#ddf4f0af34ce8f87c2dc7df73a261738c3868093",
+            .hash = "zmultiformats-0.1.0-yjvchohoBADALnCylBLeQF7Vn0SKULmQ_sFOrhzgmvQO",
         },
         .gremlin = .{
-            .url = "git+https://github.com/octopus-foundation/gremlin.zig#fccfe2659f24497199d86404e0ef7dbc79e033d2",
-            .hash = "gremlin-0.0.0-E2s91bN4DgDYbb4QNxl4ZT5nEEhNBkk5ngfVasDbsnNF",
+            .url = "git+https://github.com/norma-core/gremlin.zig#bdfcf36c2f4b22bdbd96a5ef5385ff0b940cffc2",
+            .hash = "gremlin-0.1.0-E2s91WkYEQCC1_KteI5rN9EU_tuyyZftimIOI4S4f8Fc",
         },
     },
     .paths = .{
