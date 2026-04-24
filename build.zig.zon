@@ -28,7 +28,7 @@
 
     // Tracks the earliest Zig version that the package considers to be a
     // supported use case.
-    .minimum_zig_version = "0.15.2",
+    .minimum_zig_version = "0.16.0",
 
     // This field is optional.
     // Each dependency must either provide a `url` and `hash`, or a `path`.
@@ -41,8 +41,8 @@
             .hash = "zmultiformats-0.1.0-yjvchohoBADALnCylBLeQF7Vn0SKULmQ_sFOrhzgmvQO",
         },
         .gremlin = .{
-            .url = "git+https://github.com/norma-core/gremlin.zig#bdfcf36c2f4b22bdbd96a5ef5385ff0b940cffc2",
-            .hash = "gremlin-0.1.0-E2s91WkYEQCC1_KteI5rN9EU_tuyyZftimIOI4S4f8Fc",
+            .url = "git+https://github.com/blockblaz/gremlin.zig#e3a9dc49530dba645da9b2f4aebc1cd765ee8500",
+            .hash = "gremlin-0.1.0-E2s91ccYEQB7YKB3LWrS4DD0irB3qePx19UBZhk1Ijm0",
         },
     },
     .paths = .{
