@@ -9,5 +9,5 @@ pub const id = @import("id.zig");
 pub const PeerId = id.PeerId;
 
 test {
-    @import("std").testing.refAllDeclsRecursive(@This());
+    @import("std").testing.refAllDecls(@This());
 }

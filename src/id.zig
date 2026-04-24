@@ -108,9 +108,13 @@ pub const PeerId = struct {
     }
 
     /// Generates a random PeerID for testing or DHT walking
+    var random_counter: std.atomic.Value(u64) = .init(0);
+
     pub fn random() !Self {
         var peer_id_bytes: [32]u8 = undefined;
-        std.crypto.random.bytes(&peer_id_bytes);
+        const seed = random_counter.fetchAdd(1, .monotonic) ^ @as(u64, @intFromPtr(&peer_id_bytes));
+        var prng = std.Random.DefaultPrng.init(seed);
+        prng.random().bytes(&peer_id_bytes);
 
         const mh = try Multihash(64).wrap(MULTIHASH_IDENTITY_CODE, &peer_id_bytes);
         return Self{ .multihash = mh };
