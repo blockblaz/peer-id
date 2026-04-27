@@ -41,7 +41,7 @@
             .hash = "zmultiformats-0.1.0-yjvchhppBABoxROWEWl0SVlAujCeYzQW-ALWHdAkHJNi",
         },
         .gremlin = .{
-            .url = "git+https://github.com/norma-core/gremlin.zig#eabc190c74d269b7a6baaa26614155807627f9b1",
+            .url = "git+https://github.com/blockblaz/gremlin.zig#eabc190c74d269b7a6baaa26614155807627f9b1",
             .hash = "gremlin-0.1.0-E2s91UPWEQDZCYJ_1qc2bo8va9d3GvMkAGPF-iMjTMLJ",
         },
     },
